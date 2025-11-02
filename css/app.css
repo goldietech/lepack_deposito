@@ -1,0 +1,127 @@
+/*
+ * Please see the included README.md file for license terms and conditions.
+ */
+
+
+/* This file is completely optional and not required. */
+/* Note the reference that includes it in the index.html file. */
+
+
+/* Disable certain interactions on touch devices */
+/* SOURCE: https://github.com/ftlabs/fastclick/blob/master/examples/input.html */
+/* LICENSE: https://github.com/ftlabs/fastclick/blob/master/LICENSE */
+body {
+    -webkit-touch-callout: none ;
+    -webkit-text-size-adjust: none ; -ms-text-size-adjust: none ;
+    -webkit-user-select: none ; -moz-user-select: none ; -ms-user-select: none ; user-select: none ;
+    -webkit-highlight: none ;
+    -webkit-tap-highlight-color: rgba(0,0,0,0) ;
+    -webkit-tap-highlight-color: transparent ;      /* For some Androids */
+}
+
+/* Recommended for Windows 8 Phone */
+/* SOURCE: http://www.excellentwebworld.com/common-problems-solution-for-windows-phone-8-phonegap */
+html {
+    -ms-touch-action: pan-x ;
+}
+
+/* Recommended for Windows 8 Phone */
+/* SOURCE: http://www.excellentwebworld.com/common-problems-solution-for-windows-phone-8-phonegap */
+body {
+    -ms-touch-action: pan-y ;
+    -ms-content-zooming: none ;
+}
+
+/* allow copy-paste */
+input, textarea  {
+    -webkit-user-select: text ; -moz-user-select: text ; -ms-user-select: text ; user-select: text ;
+}
+
+body {
+    /* margin: 0.5rem ; */
+    background: white ;
+    color: black ;
+}
+
+.title, input{
+    font-size: 1.5rem !important;
+}
+
+.btn-add{
+    border: 1px;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    position: fixed;
+    z-index: 999999;
+    text-align: center;
+    padding: 2px 0 0 1px;
+    background-color: #f82121;
+    top: 83%;
+    left: 5%;
+
+    box-shadow: 2px 3px 2px 0.5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 3px 2px 0.5px rgba(0, 0, 0, 0.3);
+    -ms-box-shadow: 2px 3px 2px 0.5px rgba(0, 0, 0, 0.3);
+
+
+}
+
+.btn-add1{
+    border: 1px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    z-index: 999999;
+    text-align: center;
+    padding: 5px 0 0 1px;
+    color: #fff;
+    background-color: #009688;
+    top: 20%;
+    left: 85%;
+
+    box-shadow: 2px 3px 2px 0.5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 3px 2px 0.5px rgba(0, 0, 0, 0.3);
+    -ms-box-shadow: 2px 3px 2px 0.5px rgba(0, 0, 0, 0.3);
+
+
+}
+
+.background-bar{background: #009688; color:#fff;font-weight: bold;}
+.background-menu{background: #f9f9f9; color:#fff;}
+.list a {border:0}
+.footer_menu{border-top:2px solid #ccc;}
+.tabs i{color:#fff}
+.proposta-view h2.cliente{ font-weight: bold; font-size: 14px}
+.proposta-view h2.id{ font-weight: bold; font-size: 14px; color: #069}
+.proposta-view h2.valor{ font-weight: bold; font-size: 16px; color: #063}
+.proposta-view p{  font-size: 11px; margin:0; padding: 0;}
+.g-center{text-align: center;}
+.alert.alert-info{margin: 0; width: 100%;}
+.proposta_check{background: #063; color:#fff;}
+.tabsIcon{ padding:10px}
+.fundo{background: #f9f9f9;  position: absolute;width: 100%; height: 100%; position: fixed; z-index:2; filter:alpha(opacity=50); opacity: 0.5; -moz-opacity:0.5; -webkit-opacity:0.5;}
+.fundo .icone{position: absolute; width: 100px; height: 80px; top:50%; left:50%; margin-left:-50px; margin-top: -40px; text-align: center; z-index: -1;}
+.fundo .icone p{padding: 10px 0;}
+.g-center{text-align: center;}
+
+ion-card.adv-map p {
+  font-size: 0.7em !important;
+}
+
+button[fab].fab-map {
+  top: calc(100% - 35px);
+  z-index: 50;
+}
+
+.item-bold {
+  font-weight: bold;
+}
+
+ion-content.cards-bg {
+  background-color: #f4f4f7;
+}
+.possui{float:left; text-align:center;padding:20px 0; color:#009688}
+.naoPossui{float:left; text-align:center;padding:20px 0; color:rgba(26, 25, 27, 0.37)}
+.salvoHospital{float:left; text-align:center;padding:20px 0; color:rgba(167, 136, 4, 0.75)}

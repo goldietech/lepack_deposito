@@ -1,0 +1,73 @@
+
+<ion-modal-view>
+
+  <div class="fundo hide">
+      <div class="icone">
+        <i class="fa fa-spinner fa-spin" style="font-size:40px"></i><br/>
+        <p>
+          Aguarde...
+        </p>
+      </div>
+  </div>
+
+  <ion-content>
+    <div class="background-menu" style="height:100px; background:#009688;" >
+      <i class="fa fa-times" style="font-size:22px; margin:5px; color:#fff; float:right;" ng-click="fechaModalPerfil()"></i>
+  <ul style="padding:15px;">
+        <li style="float:left;">
+          <img src="images/img.jpg" class="img-circle" style="height:70px; width:70px;">
+        </li>
+        <li style="float:left; margin-left:10px; margin-top:10px;">
+          <h1 style="font-weight:bold; color:#fff; font-size:22px">{{user_nome}}</h1>
+          <p>{{user_data_nasc}}</p>
+        </li>
+        <div class="clearfix">	</div>
+      </ul>
+      <div class="clearfix">	</div>
+
+    </div>
+
+    <ul>
+      <li style="padding:20px; border-bottom:1px solid #ececec;">
+        <h1 style="font-size:21px; margin-bottom:5px;">Problemas de Saúde</h1>
+        <p style="margin:0;">
+          {{user_problemas_saude}}
+        </p>
+
+      </li>
+      <li style="padding:20px; border-bottom:1px solid #ececec;">
+        <h1 style="font-size:21px; margin-bottom:5px;">Tipo Sanguíneo</h1>
+        <p style="margin:0;">
+        {{user_tipo_sanguineo}}
+        </p>
+
+      </li>
+      <li style="padding:20px; border-bottom:1px solid #ececec;">
+        <h1 style="font-size:21px; margin-bottom:5px;">Mãe</h1>
+        <p style="margin:0;">
+            {{user_mae_nome}}
+        </p>
+        <p style="margin:0;">
+          {{user_mae_telefone}}
+        </p>
+
+      </li>
+      <li style="padding:20px; border-bottom:1px solid #ececec;">
+        <h1 style="font-size:21px; margin-bottom:5px;">Pai</h1>
+        <p style="margin:0;">
+        {{user_pai_nome}}
+        </p>
+        <p style="margin:0;">
+          {{user_pai_telefone}}
+        </p>
+
+      </li>
+
+    </ul>
+<div>
+  <p style="width:100%; text-align:center;  font-style: italic" ng-click="redireciona('#/menu/editar.html')">Editar Informações</p>
+
+</div>
+
+  </ion-content>
+</ion-modal-view>

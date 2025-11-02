@@ -1,0 +1,68 @@
+<ion-modal-view>
+  <div class="fundo hide">
+    <div class="icone">
+      <i class="fa fa-spinner fa-spin" style="font-size:40px"></i><br/>
+      <p>
+        Aguarde...
+      </p>
+    </div>
+  </div>
+  <div class="bar bar-header"style="background:url(images/bg-preto.png)">
+    <i class="fa fa-arrow-left" style="font-size:22px; margin:5px; color:#fff;" ng-click="fechaModal()"></i>
+  </div>
+  <ion-content>
+
+    <div class="map"  id="street-view"  style="width:100%; height:300px;">
+
+    </div>
+    <div class="dados" style="background:#009688; height:auto; padding:20px 15px;">
+
+      <a href='google.navigation:q={{dadosHospital.latitude}},{{dadosHospital.longitude}}'><div class="btn-mov" style="position:absolute; right:5px; margin-top:-40px; z-index:999;  text-align:center ">
+          <span style="padding:30px 17px 20px 17px; text-align:center;background:#fff; border-radius:100%">
+            <i class="fa fa-road" style="font-size:40px; color:#009688"></i>
+          </span>
+
+      </div></a>
+      <h2 style="color:#fff; font-size:20px;">{{dadosHospital.nome_simples}}</h2>
+      <p style="color:#fff;">
+        {{dadosHospital.nome_completo}}
+          </p>
+
+    </div>
+    <ul style="border-bottom:1px solid #ececec;">
+      <a href="" class="ligarHospitalA"><li class="col-xs-4 ligarHospital">
+        <i class="fa fa-phone" style="font-size:30px;"></i><br /><br />
+        <span><strong>LIGAR</strong></span>
+      </li></a>
+      <li class="col-xs-4 possui salvarFavoritosHospital" ng-click="salvarFavoritos(dadosHospital.id_unidade)">
+        <i class="fa fa-star" style="font-size:30px;"></i><br /><br />
+        <span><strong class="nomeFavorito">SALVAR</strong></span>
+      </li>
+      <a href="" class="siteHospitalA" target="_blank"><li class="col-xs-4 siteHospital">
+        <i class="fa fa-globe" style="font-size:30px;"></i><br /><br />
+        <span><strong>SITE</strong></span>
+      </li></a>
+      <div class="clearfix"></div>
+    </ul>
+    <ul>
+      <li style="float:left; padding:5px 20px;">
+        <i class="fa fa-map-marker" style="font-size:25px; color:#009688"></i>
+      </li>
+      <li style="float:left; padding:5px 10px;">
+        <p>
+          {{dadosHospital.endereco}}, {{dadosHospital.numero}} {{dadosHospital.complemento}} - {{dadosHospital.bairro}}<br />
+          {{dadosHospital.cidade}}-{{dadosHospital.estado}}, 11050-220
+        </p>
+      </li>
+      <div class="clearfix"></div>
+      <li style="float:left; padding:15px;">
+        <i class="fa fa-clock-o" style="font-size:25px; color:#009688"></i>
+      </li>
+      <li style="float:left; padding:15px;">
+        <p>
+          <strong>{{dadosHospital.status_atendimento}}:</strong> {{dadosHospital.horario_inicio}} - {{dadosHospital.horario_final}}
+        </p>
+      </li>
+    </ul>
+  </ion-content>
+</ion-modal-view>

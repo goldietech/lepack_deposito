@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="ionic/css/ionic.min.css">
+  <title>Eavy</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+
+
+  <style>
+
+  @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+  @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+
+  </style>
+
+  <link href="css/plugins.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+  <link rel="stylesheet" type="text/css" href="ioni/css/ionicicons.min.css">
+  <link href="css/icons/icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/ng-cordova.js"></script>
+  <script type="text/javascript" src="js/cordova.js"></script>
+
+
+  <script src="js/app.js"></script>
+
+  <!-- for your event code, see README and file comments for details -->
+  <script src="js/init-app.js"></script>
+  <!-- for your init code, see README and file comments for details -->
+  <script src="xdk/init-dev.js"></script>
+  <!-- normalizes device and document ready events, see file for details -->
+  <script type="application/javascript" src="lib/jquery.min.js"></script>
+  <script type="application/javascript" src="marginal/marginal-position.js"></script>
+  <script type="application/javascript" src="ionic/js/ionic.bundle.js"></script>
+  <script type="application/javascript" src="js/index_init_services.js"></script>
+
+  <!-- CONTROLLER -->
+  <!-- SERVICES -->
+  <script type="application/javascript" src="js/values/config.js"></script>
+  <!-- VALUES -->
+
+  <script src="js/vibe-lib.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/bluetooth.js"></script>
+  <script type="text/javascript">
+  function start(){
+    var url = urlServer;
+
+    $.ajax({
+      type: "GET",
+      data: null,
+      url: url,
+
+      success: function(data){
+        $('.aguarde').fadeOut();
+        array = JSON.parse(data);
+        console.log(array);
+        if(array.length == 0){
+          var itens = msgAlert("Não há Produtos");
+          $('.produtos').append(itens);
+        }else{
+          var total = 0;
+          var item = '';
+          array.item.forEach(function(prod){
+            var existe = $('#produtos').hasClass(prod.codigo);
+            console.log(existe);
+            if(!existe){
+              $('#produtos').addClass(prod.codigo);
+              var itens = "<div class='col-md-3 "+prod.largura+"' style=' padding-top:10px; padding-bottom:10px;  background:rgb(55, 74, 143); color:#fff; cursor:pointer; text-align:center; overflow:hidden; border-bottom:3px solid rgb(33, 51, 113); height:auto; border-left:1px solid rgb(33, 51, 113); border-top:1px solid rgb(33, 51, 113); border-right:2px solid rgb(33, 51, 113)'>";
+              itens += "<img src='images/"+prod.logo+"' style='position:absolute;left:10px; bottom:0' width='60px' class='opacity-70'/>";
+              itens += "<strong style='font-size:25px'>"+prod.largura+"mm x "+prod.espessura+"m</strong>";
+              itens += "<br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'>Cor: "+prod.cor+"</span>  <br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'>Perfuração: "+prod.perfuracao+"</span>  <br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'> Pedido: <strong>"+prod.codigo_nota+"</strong></span>";
+              itens += '</div>';
+
+              total++;
+              if(total == 4){
+                itens += '<div style="clear:both"></div><br />';
+
+                total = 0;
+              }
+              $('.produtos').append(itens);
+            }
+          });
+        }
+        setTimeout(start, 2000);
+      },
+      error: function(data){
+        array = JSON.parse(data);
+
+
+      }
+    });
+  }
+
+
+  $(document).ready(function(){
+
+    start();
+    app.initialize();
+  });
+  </script>
+</head>
+
+
+<body style="padding:0;" >
+  <div class="produtos" id="produtos">
+    <h2 class="aguarde" style="position:absolute; width:150px; height:100px; left:50%; top:50%; margin-top:-50px; margin-left:-50px;">Aguarde....</h2>
+
+  </div>
+
+  <div class="app">
+      <div id="ui">
+          <button id="connectButton">Connect</button>
+      </div>
+  <div id="message">Hello.</div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="ionic/css/ionic.min.css">
+  <title>Eavy</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+
+
+  <style>
+
+  @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }
+   @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+  @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }
+   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+
+  </style>
+
+  <link href="css/plugins.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+  <link rel="stylesheet" type="text/css" href="ioni/css/ionicicons.min.css">
+  <link href="css/icons/icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+
+
+
+  <!-- normalizes device and document ready events, see file for details -->
+  <script type="application/javascript" src="lib/jquery.min.js"></script>
+
+  <!-- CONTROLLER -->
+  <!-- SERVICES -->
+  <!-- VALUES -->
+  <style type="text/css" >
+  #fundoPreto{background: #000; width: 100%; height: 100%; display: none;position: fixed; z-index:2; filter:alpha(opacity=50); opacity: 0.5; -moz-opacity:0.5; -webkit-opacity:0.5;}
+  </style>
+  <script src="js/vibe-lib.js"></script>
+  <script src="js/main.js"></script>
+  <script type="text/javascript">
+  $(document).on('click', '.printButtonB', function () {
+    var url = urlServer;
+    var codigo = $(this).data('codigo');
+    $(this).css('background','#063');
+    $.ajax({
+      url: url, /* URL que será chamada */
+      type: 'GET', /* Tipo da requisição */
+      data: 'opc=dados&codigo='+codigo, /* dado que será enviado via POST */
+      success: function (data) {
+        console.log(data);
+        array = JSON.parse(data);
+        var test = "CT~~CD,~CC^~CT~";
+        test += "^XB";
+        test += "^XA";
+        test += "^MMT";
+        test += "^MPE";
+        test += "~TA120"
+        test += "^JJ0,0,1";
+        test += "^SP0";
+        test += "^SD10";
+        test += "^SZ2";
+        test += "^SS000,000,000,0400";
+        test += "^MUD,200,200";
+        test += "^PW560";
+        test += "^JL400";
+        test += "^JSA";
+        test += "^POI";
+        test += "^LL400";
+        test += "^LH0,0";
+        test += "^JMA^FS";
+        test += "^CVN";
+		if(array.status == 'pendente'){
+
+          test += "^FO034,20^A0N,75,66^FDEST^FS";
+		  }else{
+        test += "^FO034,20^A0N,75,"+array.fontbox+"^FD"+array.box+"^FS";
+		}
+        test += "^FO0550,8,1^A0N,45,36^FD"+array.nome_fantasia+"^FS";
+        test += "^FO550,45,1^A0N,30,24^FD"+array.razao_social+"^FS";
+        test += "^FO550,72,1^A0N,28,24^FD"+array.email+"^FS";
+        test += "^FO550,100,1^A0N,28,24^FD"+array.telefone+"^FS";
+        test += "^FO34,145^A0N,45,36^FD"+array.categoria+" ^FS";
+        test += "^FO34,190^A0N,30,24^FDCOR: "+array.cor+"^FS";
+        test += "^FO34,227^A0N,30,24^FDTIPO: "+array.subcategoria+"^FS";
+        test += "^FO34,264^A0N,30,24^FDPERF: "+array.perfuracao+"^FS";
+        test += "^FO34,301^A0N,30,24^FDL: "+array.largura+"MM  E: "+array.espessura+"M^FS";
+        test += "^FO34,338^A0N,30,24^FD"+array.peso+"^FS";
+        test += "^FO16,137^GB530,248,2,B,0^FS";
+        test += "^FO304,160^GD1,197,2,B,L^FS";
+        test += "^FO525,160,1^BY3^B8N,130,Y,N^FD"+array.id+"^FS";
+		if(array.status == 'pendente'){
+		       test += "^FO359,330^A0N,40,30^FDPROD ESTOQUE^FS";
+
+		  }else{
+        if(array.nf){
+          test += "^FO359,330^A0N,40,30^FD "+array.nf+"^FS";
+        }else{
+          test += "^FO359,330^A0N,40,30^FD "+array.id_pedido+"^FS";
+        }
+		}
+        test += "^PQ1,0,1,Y";
+        test += "^XZ";
+
+        bluetoothSerial.write(test);
+      }
+
+    });
+  });
+  $(document).on('click', '.printButtonT', function () {
+    var url = urlServer;
+    var codigo = $(this).data('codigo');
+    var maiorq = $('input[name="maiorq'+codigo+'"]').val();
+    var menorq = $('input[name="menorq'+codigo+'"]').val();
+    $(this).css('background','#063');
+    var botoes = document.querySelectorAll("button.bob"+codigo);
+    for (var i = 0; i < botoes.length; i++) {
+        codigo = botoes[i].dataset.codigo;
+      numero_bobina = botoes[i].dataset.numero;
+  if(((maiorq >= 1 && numero_bobina >= maiorq) && (menorq >= 1 && numero_bobina < menorq)) || (!menorq && !maiorq)){
+
+      $.ajax({
+        url: url, /* URL que será chamada */
+        type: 'GET', /* Tipo da requisição */
+        data: 'opc=dados&codigo='+codigo, /* dado que será enviado via POST */
+        success: function (data) {
+          console.log(data);
+          array = JSON.parse(data);
+          var test = "CT~~CD,~CC^~CT~";
+          test += "^XB";
+          test += "^XA";
+          test += "^MMT";
+          test += "^MPE";
+          test += "~TA120"
+          test += "^JJ0,0,1";
+          test += "^SP0";
+          test += "^SD10";
+          test += "^SZ2";
+          test += "^SS000,000,000,0400";
+          test += "^MUD,200,200";
+          test += "^PW560";
+          test += "^JL400";
+          test += "^JSA";
+          test += "^POI";
+          test += "^LL400";
+          test += "^LH0,0";
+          test += "^JMA^FS";
+          test += "^CVN";
+		  if(array.status == 'pendente'){
+
+          test += "^FO034,20^A0N,75,66^FDEST^FS";
+		  }else{
+          test += "^FO034,20^A0N,75,"+array.fontbox+"^FD"+array.box+"^FS";
+		  }
+          test += "^FO0550,8,1^A0N,45,36^FD"+array.nome_fantasia+"^FS";
+          test += "^FO550,45,1^A0N,30,24^FD"+array.razao_social+"^FS";
+          test += "^FO550,72,1^A0N,28,24^FD"+array.email+"^FS";
+          test += "^FO550,100,1^A0N,28,24^FD"+array.telefone+"^FS";
+          test += "^FO34,145^A0N,45,36^FD"+array.categoria+" ^FS";
+          test += "^FO34,190^A0N,30,24^FDCOR: "+array.cor+"^FS";
+          test += "^FO34,227^A0N,30,24^FDTIPO: "+array.subcategoria+"^FS";
+          test += "^FO34,264^A0N,30,24^FDPERF: "+array.perfuracao+"^FS";
+          test += "^FO34,301^A0N,30,24^FDL: "+array.largura+"MM  E: "+array.espessura+"M^FS";
+          test += "^FO34,338^A0N,30,24^FD"+array.peso+"^FS";
+          test += "^FO16,137^GB530,248,2,B,0^FS";
+          test += "^FO304,160^GD1,197,2,B,L^FS";
+          test += "^FO525,160,1^BY3^B8N,130,Y,N^FD"+array.id+"^FS";
+		  if(array.status == 'pendente'){
+		       test += "^FO359,330^A0N,40,30^FDPROD EST^FS";
+
+		  }else{
+          if(array.nf){
+            test += "^FO359,330^A0N,40,30^FD "+array.nf+"^FS";
+          }else{
+            test += "^FO359,330^A0N,40,30^FD "+array.id_pedido+"^FS";
+          }
+		  }
+          test += "^PQ1,0,1,Y";
+          test += "^XZ";
+
+          bluetoothSerial.write(test);
+        }
+
+      });
+      }
+    }
+  });
+  $(document).on('click', '.printButtonP', function () {
+    var url = urlServer;
+    var numero_pedido = $('input[name="numero_pedido"]').val();
+	if(!numero_pedido){
+	var numero_pedido = $(this).data('codigo');
+
+	}
+    $.ajax({
+      type: "GET",
+      data: {"numero_pedido" : numero_pedido,"opc" : "pedidos"},
+      url: url,
+
+
+      success: function(data){
+        array = JSON.parse(data);
+        console.log(array);
+			array.forEach(function(testing){
+			  var test = "CT~~CD,~CC^~CT~";
+          test += "^XB";
+          test += "^XA";
+          test += "^MMT";
+          test += "^MPE";
+          test += "~TA120"
+          test += "^JJ0,0,1";
+          test += "^SP0";
+          test += "^SD10";
+          test += "^SZ2";
+          test += "^SS000,000,000,0400";
+          test += "^MUD,200,200";
+          test += "^PW560";
+          test += "^JL400";
+          test += "^JSA";
+          test += "^POI";
+          test += "^LL400";
+          test += "^LH0,0";
+          test += "^JMA^FS";
+          test += "^CVN";
+		   if(testing.status == 'pendente'){
+
+          test += "^FO034,20^A0N,75,66^FDEST^FS";
+		  }else{
+		    test += "^FO034,20^A0N,75,66^FD"+testing.box+"^FS";
+        }
+          test += "^FO0550,8,1^A0N,45,36^FD"+testing.nome_fantasia+"^FS";
+          test += "^FO550,45,1^A0N,30,24^FD"+testing.razao_social+"^FS";
+          test += "^FO550,72,1^A0N,28,24^FD"+testing.email+"^FS";
+          test += "^FO550,100,1^A0N,28,24^FD"+testing.telefone+"^FS";
+          test += "^FO34,145^A0N,45,36^FD"+testing.categoria+" ^FS";
+          test += "^FO34,190^A0N,30,24^FDCOR: "+testing.cor+"^FS";
+          test += "^FO34,227^A0N,30,24^FDTIPO: "+testing.subcategoria+"^FS";
+          test += "^FO34,264^A0N,30,24^FDPERF: "+testing.perfuracao+"^FS";
+          test += "^FO34,301^A0N,30,24^FDL: "+testing.largura+"MM  E: "+testing.espessura+"M^FS";
+          test += "^FO34,338^A0N,30,24^FD"+testing.peso+"^FS";
+          test += "^FO16,137^GB530,248,2,B,0^FS";
+          test += "^FO304,160^GD1,197,2,B,L^FS";
+          test += "^FO525,160,1^BY3^B8N,130,Y,N^FD"+testing.id+"^FS";
+		  if(testing.status == 'pendente'){
+		       test += "^FO359,330^A0N,40,30^FDPROD EST^FS";
+
+		  }else{
+          if(testing.nf){
+            test += "^FO359,330^A0N,40,30^FD "+testing.nf+"^FS";
+          }else{
+            test += "^FO359,330^A0N,40,30^FD "+testing.id_pedido+"^FS";
+          }
+		  }
+          test += "^PQ1,0,1,Y";
+          test += "^XZ";
+
+          bluetoothSerial.write(test);
+		});
+
+      },
+      error: function(data){
+
+
+      }
+    });
+  });
+  $(document).on('click', '.abrirModal', function () {
+    $('html, body').animate({scrollTop: 0}, 'slow');
+    var codigo = $(this).data('codigo');
+	if(codigo == 'ImprimirPedido'){
+	 var url = urlServer;
+      $('.pedidos').html('');
+    $.ajax({
+      type: "GET",
+      data: {'opc' : 'lista'},
+      url: url,
+
+
+      success: function(data){
+	   array = JSON.parse(data);
+	   var itens = '';
+        array.forEach(function(prod){
+          itens += "<button class='printButtonP btn btn-dark' style=' margin:10px; width:20%; height:50px;' data-codigo='"+prod.numero_pedido+"'>"+prod.numero_pedido+"</button>";
+		  });
+	  $('.pedidos').append(itens);
+
+	 },
+	 error: function(data){
+
+
+      }
+	  });
+	}
+    $('#fundoPreto').fadeIn();
+    $('.i'+codigo).removeClass('hide');
+  });
+  $(document).on('click', '.fechar', function () {
+    $('#fundoPreto').fadeOut();
+    $('.modal').addClass('hide');
+  });
+  $(document).on('click', '#atualizarPagina', function () {
+  start();
+
+  });
+  function start(){
+    $('#produtos').removeClass();
+    $('#produtos').addClass('produtos');
+    $('.produtos').html('');
+    var url = urlServer;
+    $.ajax({
+      type: "GET",
+      data: null,
+      url: url,
+
+
+      success: function(data){
+        $('.aguarde').fadeOut();
+        array = JSON.parse(data);
+        console.log(array);
+        if(array.length == 0){
+          var itens = msgAlert("Não há Produtos");
+          $('.produtos').append(itens);
+        }else{
+          var total = 0;
+          var item = '';
+          array.item.forEach(function(prod){
+            var existe = $('#produtos').hasClass(prod.codigo);
+            console.log(existe);
+            if(!existe){
+              $('#produtos').addClass(prod.codigo);
+              var itens = "<div class='col-md-3 abrirModal "+prod.codigo+"' data-codigo='"+prod.codigo+"' style=' padding-top:10px; padding-bottom:10px;  background:rgb(55, 74, 143); color:#fff; cursor:pointer; text-align:center; overflow:hidden; border-bottom:3px solid rgb(33, 51, 113); height:auto; border-left:1px solid rgb(33, 51, 113); border-top:1px solid rgb(33, 51, 113); border-right:2px solid rgb(33, 51, 113)'>";
+              itens += "<img src='images/"+prod.logo+"' style='position:absolute;left:10px; bottom:0' width='60px' class='opacity-70'/>";
+              itens += "<strong style='font-size:25px'>"+prod.largura+"mm x "+prod.espessura+"m</strong>";
+              itens += "<br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'>Cor: "+prod.cor+"</span>  <br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'>Perfuração: "+prod.perfuracao+"</span>  <br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'> Pedido: <strong>"+prod.codigo_nota+"</strong></span>";
+
+              itens += '</div>';
+              itens += "<div class='i"+prod.codigo+" modal hide' style='padding:10px; position:absolute; z-index:999; left:50%; top:50%; margin-top:-200px; margin-left:-250px; width:500px; height:400px; padding-top:10px; padding-bottom:10px;  background:#fff; color:#000; cursor:pointer; text-align:center; overflow:auto; '>";
+              itens += "<span style='text-align:left;'>";
+              itens += "<strong style='font-size:25px'>"+prod.largura+"mm x "+prod.espessura+"m</strong> <br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'>Cor: "+prod.cor+"</span>  <br />";
+              itens += "<span style='font-size:14px; margin-top:10px;'>Perfuração: "+prod.perfuracao+"</span>";
+              itens += "<br/>";
+              itens += "<span style='width:49%; float:left;'>";
+              itens += "  <span>Maior ou igual:</span>";
+              itens += "  <input type='text' name='maiorq"+prod.codigo+"' class='valorPedido form-control' value='' style='border:1px solid #ccc; text-align:center'/>";
+            itens += "</span>";
+            itens += "<span style='width:49%; float:right;'>";
+              itens += "<span>Menor ou igual:</span>";
+              itens += "<input type='text' name='menorq"+prod.codigo+"' class='valorPedido form-control' value='' style='border:1px solid #ccc; text-align:center'/>";
+            itens += "</span>";
+              itens += "</span>  <div style='clear:both'></div>";
+              if(prod.produtos.length >= 1){
+                prod.produtos.forEach(function(bobinas){
+                  itens += "<button class='printButtonB btn btn-dark col-md bob"+prod.codigo+"' style=' background: "+bobinas.cor+"; margin:10px; width:20%; height:50px;' data-codigo='"+bobinas.codigo+"' data-numero='"+bobinas.numero_bobina+"' >"+bobinas.numero_bobina+"</button>";
+
+                });
+                itens += "<button class='printButtonT btn btn-dark col-md' style=' background:#063; margin:10px; width:30%; height:50px;' data-codigo='"+prod.codigo+"' >Imprimir Todas</button>";
+
+              }
+              itens += '</div>';
+              total++;
+              if(total == 4){
+                itens += '<div style="clear:both"></div><br />';
+
+                total = 0;
+              }
+
+              $('.produtos').append(itens);
+            }
+          });
+        }
+        //setTimeout(start, 2000);
+      },
+      error: function(data){
+
+
+      }
+    });
+  }
+
+
+  $(document).ready(function(){
+    console.log('aaa');
+    start();
+  });
+  </script>
+</head>
+
+
+<body style="padding:0; overflow:auto" >
+  <div id="fundoPreto" class="fechar"></div>
+<div class="iImprimirPedido modal hide" style="padding:10px; position:absolute; z-index:999; left:50%; top:50%; margin-top:-200px; margin-left:-250px; width:500px; height:400px; padding-top:10px; padding-bottom:10px;  background:#fff; color:#000; cursor:pointer; text-align:center; overflow:auto; ">
+	<h3> Numero do Pedido </h3>
+	<input type="text" name="numero_pedido" class="valorPedido" value="" style="border:1px solid #ccc; text-align:center"/>
+	<button class="printButtonP" style="background:#063; width:100%; height:50px; color:#fff">Imprimir Pedido</button>
+	<hr>
+	<div class="pedidos">
+	</div>
+</div>
+
+  <div class="produtos" id="produtos">
+    <h2 class="aguarde" style="position:absolute; width:150px; height:100px; left:50%; top:50%; margin-top:-50px; margin-left:-50px;">Aguarde....</h2>
+
+  </div>
+<button class="abrirModal" data-codigo="ImprimirPedido" style="position:absolute; right:100px; bottom:5px; height:50px; width:150px; padding:10px; cursor:pointer; background:rgb(167, 96, 84); text-align:center; color:#fff;">Imprimir Pedidos</button>
+<button id="atualizarPagina" style="position:absolute; right:300px; bottom:5px; height:50px; width:50px; padding:10px; cursor:pointer; background:rgb(167, 96, 84); text-align:center; border-radius:50%"><img src="refresh.png" width="30px" /></button>
+
+  <div class="app">
+    <div id="ui">
+      <button id="connectButton" style="position:absolute; right:20px; bottom:5px; height:50px; width:50px; padding:10px; cursor:pointer; background:rgb(167, 96, 84); text-align:center; border-radius:50%"><img src="icon.png" width="30px" /></button>
+
+    </div>
+    <div id="message" style="position:absolute; bottom:0; left:0;"></div>
+  </div>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+  <script>
+  app.initialize();
+
+
+  </script>
+</body>
+
+</html>

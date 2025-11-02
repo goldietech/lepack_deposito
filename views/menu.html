@@ -1,0 +1,71 @@
+<ion-side-menus enable-menu-with-back-views="true">
+
+	<ion-side-menu-content>
+
+		<ion-nav-bar class="background-bar">
+
+			<ion-nav-buttons side="left">
+				<button class="button button-clear button-icon light ion-navicon" style="color:#fff;" menu-toggle="left"></button>
+			</ion-nav-buttons>
+		</ion-nav-bar>
+
+		<ion-nav-view name="menuContent"></ion-nav-view>
+	</ion-side-menu-content>
+
+	<ion-side-menu side="left">
+
+		<ion-content>
+			<div class="fundo hide">
+				<div class="icone">
+					<i class="fa fa-spinner fa-spin" style="font-size:40px"></i><br/>
+					<p>
+						Aguarde...
+					</p>
+				</div>
+			</div>
+			<div class="background-menu" style="height:100px; background:#009688;" ng-click="abreModalPerfil()">
+				<ul style="padding:15px;">
+					<li style="float:left;">
+						<img src="images/img.jpg" class="img-circle" style="height:70px; width:70px;">
+					</li>
+					<li style="float:left; margin-left:10px; margin-top:10px;">
+						<h1 style="font-weight:bold; color:#fff; font-size:18px">{{user_nome}}</h1>
+						<p style="font-size:15px">Ver minha ficha médica</p>
+					</li>
+					<div class="clearfix">	</div>
+				</ul>
+				<div class="clearfix">	</div>
+
+			</div>
+
+
+
+			<div class="list menu">
+				<a class="item item-icon-left" href="#/menu/home" menu-close>
+					<i class="icon ion-home" style="color:#000; font-size:24px"></i>
+					Inicio
+				</a>
+
+				<a class="item item-icon-left" ng-click="abreModalPerfil()">
+					<i class="icon ion-document-text" style="color:#000; font-size:24px"></i>
+					Ficha Médica
+				</a>
+				<a class="item item-icon-left" ng-click="abreModalSobre()">
+					<i class="icon ion-iphone" style="color:#000; font-size:24px"></i>
+					Sobre o aplicativo
+				</a>
+				<a class="item item-icon-left" href="#/menu/home" menu-close style="background:#009688; color:#fff;" ng-click="deslogar()">
+					<i class="icon ion-power" style="color:#fff; font-size:24px"></i>
+					Sair
+				</a>
+
+
+			</div>
+
+
+
+		</ion-content>
+
+	</ion-side-menu>
+
+</ion-side-menus>
